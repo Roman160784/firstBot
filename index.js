@@ -6,26 +6,30 @@ const textCommand = require('./consts')
 require('dotenv').config()
 
 const bot = new Telegraf(process.env.BOT_TOKEN);
-bot.start((ctx) => ctx.replyWithHTML(`<b> Здравcтвуйте ${ctx.message.from.first_name ? ctx.message.from.first_name : ''}, я официальный Бот государственного предприятия Гомельский ЦСМС, я могу подсказать Вам о готовности Вашей квитанции-счёт по её номеру </b>`));
+bot.start((ctx) => ctx.replyWithHTML(`<b> Здравcтвуйте ${ctx.message.from.first_name ? ctx.message.from.first_name : ''}, я официальный Бот государственного предприятия Гомельский ЦСМС, я могу подсказать Вам о готовности Вашей квитанции-счёт по её номеру  
+❗️ введите номер квитанции-счёт  не используя символ '-' 
+❗️ Пример 2160011111
+</b>`));
 
-bot.help((ctx) => ctx.reply(textCommand.commands))
 
 bot.on('message', async (ctx) => {
 
-        console.log(ctx.message.message_id);
+    const bill = ctx.message.text
 
-    if (ctx.message.text) {
-        let bill = ctx.message.text
-         const url = `https://www.gomelcsms.by/info/scheta.php?nom=${bill}&god=2023`
-         const res = await axios.get(url)
-        const parsed = parse(res.data)
-        // const parsed = parse(html)
-       const text= parsed.querySelectorAll("div[align='center'] font[color='green']").map((e) => e.text).join('')
-       const errorText= parsed.querySelectorAll("div[align='center'] font[color='red']").map((e) => e.text).join('')
-       ctx.reply(`${text} 👍`)
-       errorText && ctx.reply(`${errorText} 😔 наши сотрудники делают всё возможное для скорейшего завершения работ`)
-    } 
+   if(bill.length !== 10) {
+    ctx.reply(`Не верные данные 😔`)
+    } else {
+        const url = `https://www.gomelcsms.by/info/scheta.php?nom=${bill}&god=2023`
+        const res = await axios.get(url)
+       const parsed = parse(res.data)
+      const text= parsed.querySelectorAll("div[align='center'] font[color='green']").map((e) => e.text).join('')
+      const errorText= parsed.querySelectorAll("div[align='center'] font[color='red']").map((e) => e.text).join('')
+      ctx.reply(`${text} 👍`)
+      errorText && ctx.reply(`${errorText} 😔 наши сотрудники делают всё возможное для скорейшего завершения работ`)
+    }
 
+
+    
 
 
 })
