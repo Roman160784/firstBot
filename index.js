@@ -34,16 +34,7 @@ bot.on('message', async (ctx) => {
     }
 })
 
-exports.handler = async event => {
-    try {
-      await bot.handleUpdate(JSON.parse(event.body))
-      return { statusCode: 200, body: "" }
-    } catch (e) {
-      console.error("error in handler:", e)
-      return { statusCode: 400, body: "This endpoint is meant for bot and telegram communication" }
-    }
-  }
-  
+
 // bot.on(message('sticker'), (ctx) => ctx.reply('👍'));
 // bot.hears('hi', (ctx) => ctx.reply('Hey there'));
 bot.launch();
