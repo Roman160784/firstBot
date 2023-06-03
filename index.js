@@ -2,7 +2,7 @@ const { Telegraf } = require('telegraf');
 const { parse } = require('node-html-parser');
 const { message } = require('telegraf/filters');
 const axios = require('axios');
-const textCommand = require('../../consts')
+const textCommand = require('./consts')
 require('dotenv').config()
 
 const bot = new Telegraf(process.env.BOT_TOKEN);
