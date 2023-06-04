@@ -7,7 +7,7 @@ require('dotenv').config()
 
 const bot = new Telegraf(process.env.BOT_TOKEN);
 bot.start((ctx) => ctx.replyWithHTML(`<b> Здравcтвуйте ${ctx.message.from.first_name ? ctx.message.from.first_name : ''}, я официальный Бот государственного предприятия Гомельский ЦСМС, я могу подсказать Вам о готовности Вашей квитанции-счёт по её номеру  
-❗️ введите номер квитанции-счёт HЕ ИСПОЛЬЗУЯ СИМВОЛ '-' 
+❗️ введите номер квитанции-счёт HЕ используя символ '-' 
 ❗️ Пример 2160011111
 </b>`));
 
