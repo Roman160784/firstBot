@@ -2,10 +2,10 @@
   "name": "firstbot",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "bot.js",
   "scripts": {
-    "start": "node functions/bot/index.js",
-    "dev": "nodemon functions/bot/index.js"
+    "start": "node functions/bot/bot.js",
+    "dev": "nodemon functions/bot/bot.js"
   },
   "keywords": [],
   "author": "",
