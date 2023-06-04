@@ -16,7 +16,7 @@ bot.on('message', async (ctx) => {
     try {
         const bill = ctx.message.text
         if (bill.length !== 10) {
-            ctx.reply(`Наверное не верные данные 😔`)
+            ctx.reply(`Наверное неверные данные 😔`)
         } else {
             const url = `https://www.gomelcsms.by/info/scheta.php?nom=${bill}&god=2023`
             const res = await axios.get(url)
