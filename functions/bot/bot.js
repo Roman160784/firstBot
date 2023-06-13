@@ -8,18 +8,34 @@ require('dotenv').config();
 
 const bot = new Telegraf(process.env.BOT_TOKEN);
 bot.start((ctx) => ctx.replyWithHTML(`<b> Здравcтвуйте ${ctx.message.from.first_name ? ctx.message.from.first_name : ''}, я официальный Бот государственного предприятия Гомельский ЦСМС, я могу подсказать Вам о готовности Вашей квитанции-счёт по её номеру  
-❗️ введите номер квитанции-счёт HЕ используя символ '-' 
-❗️ Пример 2160011111
+❗️ введите номер квитанции-счёт HЕ используя символ '-'
+❗️ введите год выписки квитанции через ПРОБЕЛ, если квитанция выписана НЕ в текущем году
+❗️ Пример 2160011111 2021
 </b>`));
+
+
+bot.help((ctx) => ctx.replyWithHTML(`Время работы с 09:00 до 17:00 (в пятницу с 09:00 до 16:00);
+с 11:45 до 12:33 обеденный перерыв (во время обеда принимает и выдает приборы дежурный).
+Справки по телефонам 26-33-24, 26-33-26  
+<a href='https://gomelcsms.by/info/'> Гомельский ЦСМС сайт </a>`))
+
 
 
 bot.on('message', async (ctx) => {
     try {
-        const bill = ctx.message.text
-        if (bill.length !== 10) {
+        let data = ctx.message.text.split(' ').slice(0,2)
+        let bill = data[0] 
+        let year = data[1] 
+
+        if (year === undefined) {
+            year = '2023'
+          }
+          
+        if (bill.length !== 10 || year.length !== 4) {
             ctx.reply(`Проверьте правильность заполнения данных 😔`)
         } else {
-            const url = `https://www.gomelcsms.by/info/scheta.php?nom=${bill}&god=2023`
+            
+            const url = `https://www.gomelcsms.by/info/scheta.php?nom=${bill}&god=${year}`
             const res = await axios.get(url)
             const notFoundBill = res.data.includes('нет в базе')
             const parsed = parse(res.data)
@@ -37,9 +53,6 @@ bot.on('message', async (ctx) => {
 
 
 
-
-// bot.on(message('sticker'), (ctx) => ctx.reply('👍'));
-// bot.hears('hi', (ctx) => ctx.reply('Hey there'));
 bot.launch();
 
 // Enable graceful stop
