@@ -14,10 +14,10 @@ bot.start((ctx) => ctx.replyWithHTML(`<b> Здравcтвуйте ${ctx.message.
 </b>`));
 
 
-bot.help((ctx) => ctx.replyWithHTML(`Время работы с 09:00 до 17:00 (в пятницу с 09:00 до 16:00);
+bot.help((ctx) => ctx.replyWithHTML(`Приём/выдача приборов с 09:00 до 17:00 (в пятницу с 09:00 до 16:00);
 с 11:45 до 12:33 обеденный перерыв (во время обеда принимает и выдает приборы дежурный).
 Справки по телефонам 26-33-24, 26-33-26  
-<a href='https://gomelcsms.by/info/'> Гомельский ЦСМС сайт </a>`))
+<a href='https://gomelcsms.by/info/'> Гомельский ЦСМС</a>`))
 
 
 
@@ -41,7 +41,7 @@ bot.on('message', async (ctx) => {
             const parsed = parse(res.data)
             const text = parsed.querySelectorAll("div[align='center'] font[color='green']").map((e) => e.text).join('')
             const errorText = parsed.querySelectorAll("div[align='center'] font[color='red']").map((e) => e.text).join('')
-            await ctx.reply(`${text} 👍`)
+            text && ctx.reply(`${text} 👍`)
             errorText && await ctx.reply(`${errorText} 😔 наши специалисты делают всё возможное для скорейшего завершения работ 👌`)
             notFoundBill && await ctx.reply('Проверьте правильность заполнения данных 😔')  
         }
@@ -50,7 +50,6 @@ bot.on('message', async (ctx) => {
         e && await ctx.reply('Извините, какие-то неполадки, отпрвьте запрос позже')
     }
 })
-
 
 
 bot.launch();
