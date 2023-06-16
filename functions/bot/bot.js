@@ -24,13 +24,9 @@ bot.help((ctx) => ctx.replyWithHTML(`Приём/выдача приборов с
 bot.on('message', async (ctx) => {
     try {
         let data = ctx.message.text.split(' ').slice(0,2)
-        let bill = data[0] 
-        let year = data[1] 
+        
+        let [bill, year = '2023'] = data
 
-        if (year === undefined) {
-            year = '2023'
-          }
-          
         if (bill.length !== 10 || year.length !== 4) {
             ctx.reply(`Проверьте правильность заполнения данных 😔`)
         } else {
